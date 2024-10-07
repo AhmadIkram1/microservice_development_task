@@ -19,15 +19,24 @@ Terminal 1 - Running acss Application
 1.	Navigate to the acss directory:
 cd acss
 2.	Install the required dependencies from the requirements.txt file:
+   
 pip install -r requirements.txt
-3.	Run the Django development server on port 8000:
+
+4.	Run the Django development server on port 8000:
+   
 python manage.py runserver 8000
+
 Terminal 2 - Running sis Application
 1.	Navigate to the sis directory:
+   
 cd sis
-2.	Run the Django development server on port 8001:
+
+3.	Run the Django development server on port 8001:
+   
 python manage.py runserver 8001
-3. Access the Applications
+
+5. Access the Applications
+   
 •	The acss application will be running on http://127.0.0.1:8000/.
 •	The sis application will be running on http://127.0.0.1:8001/.
 
