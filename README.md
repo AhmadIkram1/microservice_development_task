@@ -19,8 +19,11 @@ cd microservice_development_task
 ```
 
 2. Open Two Terminals
+
 You'll need two terminal windows to run each Django app simultaneously.
+
 Terminal 1 - Running acss Application
+
 3.	Navigate to the acss directory:
 ```
 cd acss
@@ -35,6 +38,7 @@ pip install -r requirements.txt
 python manage.py runserver 8000
 ```
 Terminal 2 - Running sis Application
+
 6.	Navigate to the sis directory:
 ```
 cd sis
