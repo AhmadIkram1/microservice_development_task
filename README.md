@@ -21,32 +21,57 @@ cd microservice_development_task
 2. Open Two Terminals
 You'll need two terminal windows to run each Django app simultaneously.
 Terminal 1 - Running acss Application
-1.	Navigate to the acss directory:
+3.	Navigate to the acss directory:
 ```
 cd acss
 ```
 
-2.	Install the required dependencies from the requirements.txt file:
+4.	Install the required dependencies from the requirements.txt file:
 ```   
 pip install -r requirements.txt
 ```
-4.	Run the Django development server on port 8000:
+5.	Run the Django development server on port 8000:
 ```   
 python manage.py runserver 8000
 ```
 Terminal 2 - Running sis Application
-1.	Navigate to the sis directory:
+6.	Navigate to the sis directory:
 ```
 cd sis
 ```
-3.	Run the Django development server on port 8001:
+7.	Run the Django development server on port 8001:
 ```
 python manage.py runserver 8001
 ```
-5. Access the Applications
+8. Access the Applications
    
 •	The acss application will be running on http://127.0.0.1:8000/.
 
 •	The sis application will be running on http://127.0.0.1:8001/.
 
+9. Both Systems are communicating with each other using API'S.
 
+SIS API Endpoints:
+
+API to get the list of enrolled studends
+
+```
+http://127.0.0.1:8001/api/getenrollments/
+
+```
+
+API to get the list of courses
+
+```
+http://127.0.0.1:8001/api/getcourses/
+
+```
+
+ACSS API Endpoints:
+
+API to get the schedule list
+
+```
+http://127.0.0.1:8000/api/schedules/
+
+```
