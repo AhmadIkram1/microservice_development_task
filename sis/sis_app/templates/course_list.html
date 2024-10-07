@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Course List  {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Courses</h1>
+<table class="table table-bordered table-striped text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Instructor</th>
+            <th>Credits</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <td>{{course.name}}</td>
+            <td>{{course.instructor}}</td>
+            <td>{{course.credits}}</td>   
+            <td>
+                <a href="{%url 'course_update' course.id%}" class="btn btn-warning">Update</a>
+                <a href="{%url 'course_delete' course.id%}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

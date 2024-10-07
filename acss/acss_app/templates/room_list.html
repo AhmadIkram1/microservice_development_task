@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Student List  {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Rooms</h1>
+<table class="table table-bordered table-striped text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th>Room Name</th>
+            <th>Room Capacity</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{room.room_name}}</td>
+            <td>{{room.capacity}}</td>
+            <td>
+                <a href="{%url 'room_update' room.id%}" class="btn btn-warning">Update</a>
+                <a href="{%url 'room_delete' room.id%}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

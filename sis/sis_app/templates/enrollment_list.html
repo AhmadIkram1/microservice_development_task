@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Enrollment List  {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Enrollments</h1>
+<table class="table table-bordered table-striped text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Enrollment Date</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for enrollment in enrollments %}
+        <tr>
+            <td>{{enrollment.student.name}}</td>
+            <td>{{enrollment.course.name}}</td>
+            <td>{{enrollment.enrollment_date}}</td>   
+            <td>
+                <a href="{%url 'enrollment_update' enrollment.id%}" class="btn btn-warning">Update</a>
+                <a href="{%url 'enrollment_delete' enrollment.id%}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

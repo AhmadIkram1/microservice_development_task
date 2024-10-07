@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Schedule List  {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Schedules</h1>
+<table class="table table-bordered table-striped text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th>Course</th>
+            <th>Room</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Day Of Week</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{schedule.course}}</td>
+            <td>{{schedule.room.room_name}}</td>
+            <td>{{schedule.start_time}}</td>
+            <td>{{schedule.end_time}}</td>
+            <td>{{schedule.day_of_week}}</td>   
+            <td>
+                <a href="{%url 'schedule_update' schedule.id%}" class="btn btn-warning">Update</a>
+                <a href="{%url 'schedule_delete' schedule.id%}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

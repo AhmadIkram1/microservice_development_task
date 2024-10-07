@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %} Home {%endblock%}
+
+{% block content %} 
+<h1 class="text-center mb-3"> Enrollment Form </h1>
+
+<form method="POST" class="jumbotron  light-shadow maxWidth mx-auto my-2 p-3">
+<div class="d-flex flex-column gap5 ">
+{% csrf_token %}
+{{form}}
+<button class="btn btn-primary btn-block" type="submit">Save Enrollment</button>
+</div>
+</form>
+
+{%endblock%}
