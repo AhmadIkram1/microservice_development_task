@@ -121,18 +121,29 @@ def room_delete_view(request, id):
 
 #Schedule Crud
 @login_required
-@never_cache
 def schedule_create_view(request):
-    # Fetch course choices by calling the API
     api_url = 'http://127.0.0.1:8001/api/getcourses/'
-    courses_choices = [('','Select a Course')]  # Default choice
+    courses_choices = [('','Select a Course')]  
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
             courses_data = response.json()
             courses_choices += [(course['name'], course['name']) for course in courses_data]
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")  # Log the error if API fails
+        print(f"An error occurred: {e}")  
+
+    
+    form = ScheduleForm()
+    form.fields['course'].choices = courses_choices
+
+    if request.method == 'POST':
+        form = ScheduleForm(request.POST)
+        form.fields['course'].choices = courses_choices  
+        form.save()
+        return redirect('schedule_list')
+
+    return render(request, 'schedule_form.html', {'form': form})
+
 
     # Pass the choices to the form dynamically
     form = ScheduleForm()
@@ -147,13 +158,11 @@ def schedule_create_view(request):
     return render(request, 'schedule_form.html', {'form': form})
 
 @login_required
-@never_cache
 def schedule_read_view(request):
     schedules = Schedule.objects.all()
     return render(request, 'schedule_list.html', {'schedules': schedules})
 
 @login_required
-@never_cache
 def schedule_update_view(request, id):
     schedule = Schedule.objects.get(id=id)
     form = ScheduleForm(instance=schedule)
@@ -165,7 +174,6 @@ def schedule_update_view(request, id):
     return render(request, 'schedule_form.html', {'form': form})
 
 @login_required
-@never_cache
 def schedule_delete_view(request, id):
     schedule = Schedule.objects.get(id=id)
     if request.method == 'POST':
