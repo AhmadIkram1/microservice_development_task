@@ -55,27 +55,27 @@ python manage.py runserver 8001
 
 9. Both Systems are communicating with each other using API'S.
 
-SIS API Endpoints:
+ SIS API Endpoints:
 
-API to get the list of enrolled studends
+    API to get the list of enrolled studends
 
-```
-http://127.0.0.1:8001/api/getenrollments/
+    ```
+    http://127.0.0.1:8001/api/getenrollments/
 
-```
+    ```
 
-API to get the list of courses
+    API to get the list of courses
 
-```
-http://127.0.0.1:8001/api/getcourses/
+    ```
+    http://127.0.0.1:8001/api/getcourses/
 
-```
+    ```
 
-ACSS API Endpoints:
+ ACSS API Endpoints:
 
-API to get the schedule list
+    API to get the schedule list
 
-```
-http://127.0.0.1:8000/api/schedules/
+    ```
+    http://127.0.0.1:8000/api/schedules/
 
-```
+    ```
