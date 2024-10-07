@@ -254,89 +254,89 @@
     </nav>
     <div class="container">{%block content%}{%endblock%}</div>
     <script>
+      // Variable to store the currently open dropdown
+      var currentlyOpenDropdown = null;
+    
       function toggleDropdown() {
-        var dropdownContent = document.getElementById("dropdown-content");
-        if (dropdownContent.style.display === "block") {
-          dropdownContent.style.display = "none";
-        } else {
-          dropdownContent.style.display = "block";
-        }
-      }
-
-      // Close the dropdown if clicked outside of it
-      window.onclick = function (event) {
-        if (!event.target.matches(".dropdown-btn")) {
-          var dropdowns = document.getElementsByClassName("dropdown-content");
-          for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-            }
+          var dropdownContent = document.getElementById("dropdown-content");
+    
+          // Close the currently open dropdown (if any) that is not this one
+          if (currentlyOpenDropdown && currentlyOpenDropdown !== dropdownContent) {
+              currentlyOpenDropdown.style.display = "none";
           }
-        }
-      };
+    
+          // Toggle this dropdown
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              currentlyOpenDropdown = null; // No dropdown is open now
+          } else {
+              dropdownContent.style.display = "block";
+              currentlyOpenDropdown = dropdownContent; // Store the currently open dropdown
+          }
+      }
+    
       function toggleCourse() {
-        var dropdownContent = document.getElementById("course-content");
-        if (dropdownContent.style.display === "block") {
-          dropdownContent.style.display = "none";
-        } else {
-          dropdownContent.style.display = "block";
-        }
-      }
-
-      // Close the dropdown if clicked outside of it
-      window.onclick = function (event) {
-        if (!event.target.matches(".course-btn")) {
-          var dropdowns = document.getElementsByClassName("course-content");
-          for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-            }
+          var dropdownContent = document.getElementById("course-content");
+    
+          // Close the currently open dropdown (if any) that is not this one
+          if (currentlyOpenDropdown && currentlyOpenDropdown !== dropdownContent) {
+              currentlyOpenDropdown.style.display = "none";
           }
-        }
-      };
+    
+          // Toggle this dropdown
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              currentlyOpenDropdown = null; // No dropdown is open now
+          } else {
+              dropdownContent.style.display = "block";
+              currentlyOpenDropdown = dropdownContent; // Store the currently open dropdown
+          }
+      }
+    
       function toggleSch() {
-        var dropdownContent = document.getElementById("sch-content");
-        if (dropdownContent.style.display === "block") {
-          dropdownContent.style.display = "none";
-        } else {
-          dropdownContent.style.display = "block";
-        }
-      }
-
-      // Close the dropdown if clicked outside of it
-      window.onclick = function (event) {
-        if (!event.target.matches(".sch-btn")) {
-          var dropdowns = document.getElementsByClassName("sch-content");
-          for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-            }
+          var dropdownContent = document.getElementById("sch-content");
+    
+          // Close the currently open dropdown (if any) that is not this one
+          if (currentlyOpenDropdown && currentlyOpenDropdown !== dropdownContent) {
+              currentlyOpenDropdown.style.display = "none";
           }
-        }
-      };
+    
+          // Toggle this dropdown
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              currentlyOpenDropdown = null; // No dropdown is open now
+          } else {
+              dropdownContent.style.display = "block";
+              currentlyOpenDropdown = dropdownContent; // Store the currently open dropdown
+          }
+      }
+    
       function toggleEn() {
-        var dropdownContent = document.getElementById("en-content");
-        if (dropdownContent.style.display === "block") {
-          dropdownContent.style.display = "none";
-        } else {
-          dropdownContent.style.display = "block";
-        }
+          var dropdownContent = document.getElementById("en-content");
+    
+          // Close the currently open dropdown (if any) that is not this one
+          if (currentlyOpenDropdown && currentlyOpenDropdown !== dropdownContent) {
+              currentlyOpenDropdown.style.display = "none";
+          }
+    
+          // Toggle this dropdown
+          if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              currentlyOpenDropdown = null; // No dropdown is open now
+          } else {
+              dropdownContent.style.display = "block";
+              currentlyOpenDropdown = dropdownContent; // Store the currently open dropdown
+          }
       }
-
+    
       // Close the dropdown if clicked outside of it
       window.onclick = function (event) {
-        if (!event.target.matches(".en-btn")) {
-          var dropdowns = document.getElementsByClassName("en-content");
-          for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-            }
+          if (!event.target.matches(".dropdown-btn") && !event.target.matches(".course-btn") && !event.target.matches(".sch-btn") && !event.target.matches(".en-btn")) {
+              if (currentlyOpenDropdown) {
+                  currentlyOpenDropdown.style.display = "none";
+                  currentlyOpenDropdown = null; // Reset open dropdown
+              }
           }
-        }
       };
     </script>
     <script
