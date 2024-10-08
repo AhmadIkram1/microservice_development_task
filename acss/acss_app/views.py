@@ -4,14 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 # The login_required decorator to protect views
 from django.contrib.auth.decorators import login_required
-# For class-based views[CBV]
-from django.contrib.auth.mixins import LoginRequiredMixin
-# For class-based views[CBV]
 from django.views import View
-from django.views.decorators.cache import never_cache
-#  Import the User class (model)
 from django.contrib.auth.models import User
-# Import the RegisterForm from forms.py
 from .forms import *
 from .models import *
 import requests
@@ -28,13 +22,11 @@ def ScheduleListAPIView(request):
 
 def register_view(request):
     if request.method == "POST":
-        # Directly grab form data from POST request
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
         password_confirm = request.POST.get("password_confirm")
         
-        # Perform validation (you can use a helper function if needed)
         errors = {}
         if password != password_confirm:
             errors['password'] = "Passwords do not match!"
@@ -45,13 +37,11 @@ def register_view(request):
         if User.objects.filter(email=email).exists():
             errors['email'] = "Email already registered!"
 
-        # If there are no errors, create the user
         if not errors:
             user = User.objects.create_user(username=username, password=password, email=email)
-            login(request, user)  # Automatically log the user in
+            login(request, user) 
             return redirect('home')
         else:
-            # If there are errors, re-render the template with error messages
             return render(request, 'register.html', {'errors': errors})
     else:
         return render(request, 'register.html')
@@ -77,7 +67,6 @@ def logout_view(request):
     return redirect('login')
 
 # Home View
-# Using the decorator 
 @login_required
 def home_view(request):
     return render(request, 'home.html')
@@ -144,19 +133,6 @@ def schedule_create_view(request):
 
     return render(request, 'schedule_form.html', {'form': form})
 
-
-    # Pass the choices to the form dynamically
-    form = ScheduleForm()
-    form.fields['course'].widget.choices = courses_choices
-
-    if request.method == 'POST':
-        form = ScheduleForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('schedule_list')
-    
-    return render(request, 'schedule_form.html', {'form': form})
-
 @login_required
 def schedule_read_view(request):
     schedules = Schedule.objects.all()
@@ -199,26 +175,22 @@ def enrollment_read_view(request):
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
-            # Step 1: Delete all existing enrollments
             Enrollment.objects.all().delete()
-
-            # Step 2: Fetch new enrollment data from the API
             enrollments_data = response.json()        
             for enrollment_data in enrollments_data:
                 Enrollment.objects.create(
-                    student=enrollment_data['student'],  # Assuming 'student_id' exists in the API response
-                    course=enrollment_data['course'],    # Assuming 'course_id' exists in the API response
+                    student=enrollment_data['student'], 
+                    course=enrollment_data['course'],  
                     enrollment_date=enrollment_data['enrollment_date']
-                )
+            )
               
-            # Fetch all enrollments after the update
             enrollments = Enrollment.objects.all()
             print(enrollments)
         else:
-            enrollments = []
+            enrollments = enrollments = Enrollment.objects.all()
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
-        enrollments = []
+        enrollments = enrollments = Enrollment.objects.all()
 
     return render(request, 'enrollment_list.html', {'enrollments': enrollments})
 

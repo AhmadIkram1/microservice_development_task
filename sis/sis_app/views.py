@@ -1,20 +1,10 @@
-# To handle views and redirects
 from django.shortcuts import render, redirect
-# To Import auth functions form Django
 from django.contrib.auth import authenticate, login, logout
-# The login_required decorator to protect views
 from django.contrib.auth.decorators import login_required
-# For class-based views[CBV]
-from django.contrib.auth.mixins import LoginRequiredMixin
-# For class-based views[CBV]
 from django.views import View
-#  Import the User class (model)
 from django.contrib.auth.models import User
-# Import the RegisterForm from forms.py
 from .forms import *
 import requests
-import json
-import xml.etree.ElementTree as ET
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
@@ -34,13 +24,11 @@ def get_courses(request):
 
 def register_view(request):
     if request.method == "POST":
-        # Directly grab form data from POST request
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
         password_confirm = request.POST.get("password_confirm")
         
-        # Perform validation (you can use a helper function if needed)
         errors = {}
         if password != password_confirm:
             errors['password'] = "Passwords do not match!"
@@ -51,13 +39,11 @@ def register_view(request):
         if User.objects.filter(email=email).exists():
             errors['email'] = "Email already registered!"
 
-        # If there are no errors, create the user
         if not errors:
             user = User.objects.create_user(username=username, password=password, email=email)
-            login(request, user)  # Automatically log the user in
+            login(request, user) 
             return redirect('home')
         else:
-            # If there are errors, re-render the template with error messages
             return render(request, 'register.html', {'errors': errors})
     else:
         return render(request, 'register.html')
@@ -83,7 +69,6 @@ def logout_view(request):
     return redirect('login')
 
 # Home View
-# Using the decorator 
 @login_required
 def home_view(request):
     return render(request, 'home.html')
@@ -210,33 +195,25 @@ def schedule_create_view(request):
 @login_required
 def schedule_read_view(request):
     api_url = 'http://127.0.0.1:8000/api/schedules/'
-
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
-            # Parse the JSON response
-            schedules_data = response.json()  # This will give you a list of schedule entries
-
+            Schedule.objects.all().delete()
+            schedules_data = response.json()
             for schedule_data in schedules_data:
-                print(schedule_data)
-                # Update or create the schedule in the database
-                Schedule.objects.update_or_create(
-                    id=schedule_data['id'],  # Use the ID for updating
-                    defaults={
-                        'course': schedule_data['course'],
-                        'start_time': schedule_data['start_time'],
-                        'end_time': schedule_data['end_time'],
-                        'day_of_week': schedule_data['day_of_week'],
-                        'room': schedule_data['room_name'],  # Foreign key reference to Room
-                    }
-                )
-
-            schedules = Schedule.objects.all()  # Fetch all schedules for rendering
+               Schedule.objects.create(
+                  course=schedule_data['course'],
+                  start_time=schedule_data['start_time'],
+                  end_time=schedule_data['end_time'],
+                  day_of_week=schedule_data['day_of_week'],
+                  room=schedule_data['room_name']
+            )
+            schedules = Schedule.objects.all() 
         else:
-            schedules = []
+            schedules = Schedule.objects.all() 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
-        schedules = []
+        schedules = Schedule.objects.all() 
 
     return render(request, 'schedule_list.html', {'schedules': schedules})
 

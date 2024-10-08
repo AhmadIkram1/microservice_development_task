@@ -12,7 +12,7 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Day Of Week</th>
-            <th>Actions</th>
+            {% comment %} <th>Actions</th> {% endcomment %}
             
         </tr>
     </thead>
@@ -24,10 +24,10 @@
             <td>{{schedule.start_time}}</td>
             <td>{{schedule.end_time}}</td>
             <td>{{schedule.day_of_week}}</td>   
-            <td>
+            {% comment %} <td>
                 <a href="{%url 'schedule_update' schedule.id%}" class="btn btn-warning">Update</a>
                 <a href="{%url 'schedule_delete' schedule.id%}" class="btn btn-danger">Delete</a>
-            </td>
+            </td> {% endcomment %}
         </tr>
         {% endfor %}
     </tbody>
